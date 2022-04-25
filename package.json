@@ -1,0 +1,11 @@
+{
+  "name": "d3world",
+  "version": "1.0.0",
+  "description": "Playing around with d3.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ryan Remaly",
+  "license": "ISC"
+}
