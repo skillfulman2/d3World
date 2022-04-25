@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Single Page App</title>
+    <link rel="stylesheet" href="/static/css/index.css" />
+  </head>
+  <body>
+    <nav class="nav">
+      <a href="/" class="nav__link" data-link>Home</a>
+      <a href="/D3" class="nav__link" data-link>D3</a>
+    </nav>
+    <div id="html"></div>
+    <div id="app">
+      <script src="https://d3js.org/d3.v6.min.js"></script>
+      <script>
+        let circle;
+        function doSVG() {
+          const svgContainer = d3.select("#svgContainer");
+          circle = svgContainer
+            .append("circle")
+            .attr("cx", 250)
+            .attr("cy", 250)
+            .attr("r", 20)
+            .attr("style", `fill:red`);
+          dragHandler(circle);
+        }
+
+        const dragHandler = d3
+          .drag()
+          .on("start", function (event) {
+            d3.select(this).attr("stroke", "black");
+          })
+          .on("drag", function (event) {
+            d3.select(this).attr("cx", event.x).attr("cy", event.y);
+            showPosition(event.x, event.y);
+          })
+          .on("end", function (event) {
+            d3.select(this).attr("stroke", null);
+          });
+
+        function showPosition(x, y) {
+          const positionIndicator = d3
+            .select("#svgContainer")
+            .selectAll(".position");
+
+          positionIndicator
+            .data([{ x, y }])
+            .enter()
+            .append("text")
+            .attr("y", 40)
+            .attr("x", 800)
+            .attr("class", "position")
+            .attr("style", "font-family:Lucida Sans;font-size:32px; fill:green")
+            .merge(positionIndicator)
+            .text((d) => `( ${d.x} , ${d.y} )`);
+        }
+      </script>
+      <body onload="doSVG()">
+        <svg id="svgContainer" width="1000" height="1000"></svg>
+      </body>
+    </div>
+
+    
+
+    <script type="module" src="/static/js/index.js"></script>
+  </body>
+</html>
