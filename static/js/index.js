@@ -1,5 +1,6 @@
 import Dashboard from "./views/Home.js";
 import D3 from "./views/D3.js";
+import Game from "./views/Game.js"
 
 
 const pathToRegex = path => new RegExp("^" + path.replace(/\//g, "\\/").replace(/:\w+/g, "(.+)") + "$");
@@ -22,6 +23,7 @@ const router = async () => {
     const routes = [
         { path: "/", view: Dashboard },
         { path: "/D3", view: D3 },
+        { path: "/game", view: Game },
 
     ];
 
@@ -44,17 +46,25 @@ const router = async () => {
 
     const view = new match.route.view(getParams(match));
 
-    if (!(match.route.path == "/D3")) {
-        console.log(match.route.path)
+    if (match.route.path == "/") {
+        console.log("home = " + match.route.path)
         document.querySelector("#app").style.display = 'none'
+        document.querySelector("#game").style.display = 'none'
         document.querySelector("#html").innerHTML = await view.getHtml();
         document.querySelector("#html").style.display = 'block'
 
         
-    } else {
+    } else if (match.route.path == "/D3")  {
+        console.log(match.route.path)
         document.querySelector("#app").style.display = 'block'
+        document.querySelector("#game").style.display = 'none'
         document.querySelector("#html").style.display = 'none'
 
+    } else {
+        console.log("game = " + match.route.path)
+        document.querySelector("#game").style.display = 'block'
+        document.querySelector("#app").style.display = 'none'
+        document.querySelector("#html").style.display = 'none'
     }
 
  
